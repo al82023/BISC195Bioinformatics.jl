@@ -2,6 +2,7 @@ module Assignment07
 
 export normalizeDNA
         composition
+        gc_content
 
 # # uncomment the following line if you intend to use BioSequences types
 using BioSequences
@@ -30,6 +31,11 @@ end
 
 function composition(sequence)
     BioSequences.composition(normalizeDNA(sequence))
+end
+
+function gc_content(sequence::Union{LongDNASeq, String})
+    c = composition(sequence)
+    return (c[DNA_C] + c[DNA_G]) / (c[DNA_A] + c[DNA_C] + c[DNA_G] + c[DNA_T] + c[DNA_N])
 end
 
 end # module Assignment07
