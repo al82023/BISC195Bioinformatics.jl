@@ -36,7 +36,7 @@ function composition(sequence::AbstractString)
     BioSequences.composition(normalizeDNA(sequence))
 end
 
-function gc_content(sequence)
+function gc_content(sequence::AbstractString)
     BioSequences.gc_content(normalizeDNA(sequence))
 end
 
