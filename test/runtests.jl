@@ -1,5 +1,6 @@
 using Assignment07
 using Test
+using BioSequences
 
 @testset "Assignment07" begin
 # @testset "Using Strings" begin
