@@ -6,7 +6,7 @@ export normalizeDNA,
 
 # # uncomment the following line if you intend to use BioSequences types
 using BioSequences
-import BioSequences: composition
+import BioSequences: composition, gc_content
 
 """
     normalizeDNA(::AbstractString)
@@ -33,9 +33,8 @@ function composition(sequence::AbstractString)
     BioSequences.composition(normalizeDNA(sequence))
 end
 
-function gc_content(sequence::Union{LongDNASeq, AbstractString})
-    c = composition(sequence)
-    return (c[DNA_C] + c[DNA_G]) / (c[DNA_A] + c[DNA_C] + c[DNA_G] + c[DNA_T] + c[DNA_N])
+function gc_content(sequence)
+    BioSequences.gc_content(normalizeDNA(sequence))
 end
 
 end # module Assignment07
