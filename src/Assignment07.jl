@@ -2,11 +2,13 @@ module Assignment07
 
 export normalizeDNA,
         composition,
-        gc_content
+        gc_content,
+        complement,
+        reverse_complement
 
 # # uncomment the following line if you intend to use BioSequences types
 using BioSequences
-import BioSequences: composition, gc_content
+import BioSequences: composition, gc_content, complement, reverse_complement
 
 """
     normalizeDNA(::AbstractString)
@@ -35,6 +37,14 @@ end
 
 function gc_content(sequence)
     BioSequences.gc_content(normalizeDNA(sequence))
+end
+
+function complement(sequence::AbstractString)
+    BioSequences.complement(normalizeDNA(sequence))
+end
+
+function reverse_complement(sequence::AbstractString)
+    BioSequences.reverse_complement(normalizeDNA(sequence))
 end
 
 end # module Assignment07
