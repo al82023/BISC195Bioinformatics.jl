@@ -4,7 +4,8 @@ export normalizeDNA,
         composition,
         gc_content,
         complement,
-        reverse_complement
+        reverse_complement,
+        parse_fasta
 
 # # uncomment the following line if you intend to use BioSequences types
 using BioSequences
@@ -45,6 +46,29 @@ end
 
 function reverse_complement(sequence::AbstractString)
     BioSequences.reverse_complement(normalizeDNA(sequence))
+end
+
+function parse_fasta(path)
+    headers = []
+    sequences = []
+    str = ""
+    for line in eachline(path)
+        if '>' ∈ line
+            push!(headers, string(lstrip(line, '>')))
+            if str != ""
+                push!(sequences, LongDNASeq(str))
+            end
+            str = ""
+        elseif line != ""
+            for base in line
+                occursin(base, "AGCTNagctn") || error("invalid base $base")
+            end
+            str = str * line
+        end
+    end
+    push!(sequences, LongDNASeq(str))
+    parsedfile = (headers, sequences)
+    return parsedfile
 end
 
 end # module Assignment07
