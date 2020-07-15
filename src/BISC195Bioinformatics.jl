@@ -60,9 +60,9 @@ function parse_fasta(path)
             end
             str = ""
         elseif line != ""
-            for base in line
-                occursin(base, "AGCTNagctn") || error("invalid base $base")
-            end
+            # for base in line
+            #     occursin(base, "AGCTNagctn") || error("invalid base $base")
+            # end
             str = str * line
         end
     end
