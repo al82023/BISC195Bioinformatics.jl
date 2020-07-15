@@ -1,8 +1,8 @@
-using Assignment07
+using BISC195Bioinformatics
 using Test
 using BioSequences
 
-@testset "Assignment07" begin
+@testset "BISC195Bioinformatics" begin
 # @testset "Using Strings" begin
     
 #     @testset "normalizeDNA" begin
@@ -141,4 +141,4 @@ using BioSequences
 
 end # BioSequences
 
-end # Assignment07
+end # BISC195Bioinformatics
