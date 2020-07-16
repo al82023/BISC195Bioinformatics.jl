@@ -5,7 +5,7 @@ export normalizeDNA,
         gc_content,
         complement,
         reverse_complement,
-        parse_fasta
+        parse_fasta 
 
 # # uncomment the following line if you intend to use BioSequences types
 using BioSequences
@@ -33,19 +33,19 @@ end
 
 
 function composition(sequence::AbstractString)
-    BioSequences.composition(normalizeDNA(sequence))
+    BioSequences.composition(LongDNASeq(sequence))
 end
 
 function gc_content(sequence::AbstractString)
-    BioSequences.gc_content(normalizeDNA(sequence))
+    BioSequences.gc_content(LongDNASeq(sequence))
 end
 
 function complement(sequence::AbstractString)
-    BioSequences.complement(normalizeDNA(sequence))
+    BioSequences.complement(LongDNASeq(sequence))
 end
 
 function reverse_complement(sequence::AbstractString)
-    BioSequences.reverse_complement(normalizeDNA(sequence))
+    BioSequences.reverse_complement(LongDNASeq(sequence))
 end
 
 function parse_fasta(path)
@@ -71,4 +71,4 @@ function parse_fasta(path)
     return parsedfile
 end
 
-end # module BISC195Bioinformatics
+end # module BISC195Bioinformaticsp
