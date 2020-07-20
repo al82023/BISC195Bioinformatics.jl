@@ -7,7 +7,8 @@ export normalizeDNA,
         reverse_complement,
         parse_fasta,
         LongDNASeq,
-        uniquekmers
+        uniquekmers,
+        distance
 
 using BioSequences
 import BioSequences: composition, gc_content, complement, reverse_complement, LongDNASeq
@@ -85,6 +86,10 @@ function uniquekmers(seq, k)
         push!(kmers, LongDNASeq(kmer))
     end
     return Set(kmers)
+end
+
+function distance(set1, set2)
+    1 - (length(intersect(set1, set2)) / length(union(set1, set2)))
 end
 
 end # module BISC195Bioinformaticsp
