@@ -5,11 +5,12 @@ export normalizeDNA,
         gc_content,
         complement,
         reverse_complement,
-        parse_fasta 
+        parse_fasta,
+        LongDNASeq,
+        uniquekmers
 
-# # uncomment the following line if you intend to use BioSequences types
 using BioSequences
-import BioSequences: composition, gc_content, complement, reverse_complement
+import BioSequences: composition, gc_content, complement, reverse_complement, LongDNASeq
 
 """
     normalizeDNA(::AbstractString)
@@ -69,6 +70,21 @@ function parse_fasta(path)
     push!(sequences, LongDNASeq(str))
     parsedfile = (headers, sequences)
     return parsedfile
+end
+
+function uniquekmers(seq, k)
+    sequence = String(seq)
+    1 <= k <= length(sequence) || error("k must be a positive integer less than the length of the sequence")
+    kmers = []
+    stopindex = length(sequence)-(k-1)
+    for i in 1:stopindex
+        kmer = sequence[i:i+k-1]
+        if match(r"[^ACGT]", kmer) != nothing # if kmer contains any ambiguous base
+            continue
+        end
+        push!(kmers, LongDNASeq(kmer))
+    end
+    return Set(kmers)
 end
 
 end # module BISC195Bioinformaticsp
