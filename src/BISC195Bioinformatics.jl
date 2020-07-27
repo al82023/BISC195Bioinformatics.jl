@@ -46,6 +46,11 @@ function complement(sequence::AbstractString)
     BioSequences.complement(LongDNASeq(sequence))
 end
 
+function complement(base::Char)
+    nt = convert(DNA, base)
+    Char(BioSequences.complement(nt))
+end
+
 function reverse_complement(sequence::AbstractString)
     BioSequences.reverse_complement(LongDNASeq(sequence))
 end
