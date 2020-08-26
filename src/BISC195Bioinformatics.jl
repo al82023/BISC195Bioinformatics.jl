@@ -1,14 +1,14 @@
 module BISC195Bioinformatics
 
 export normalizeDNA,
-        composition,
-        gc_content,
-        complement,
-        reverse_complement,
-        parse_fasta,
-        LongDNASeq,
-        uniquekmers,
-        distance
+       composition,
+       gc_content,
+       complement,
+       reverse_complement,
+       parse_fasta,
+       LongDNASeq,
+       uniquekmers,
+       distance
 
 using BioSequences
 import BioSequences: composition, gc_content, complement, reverse_complement, LongDNASeq
@@ -33,7 +33,8 @@ end
 # Your code here.
 # Don't forget to export your functions!
 
-
+# I know I told you to do this, but it's technically "type-piracy"
+# see: https://docs.julialang.org/en/v1/manual/style-guide/#Avoid-type-piracy-1
 function composition(sequence::AbstractString)
     BioSequences.composition(LongDNASeq(sequence))
 end
@@ -60,7 +61,7 @@ function parse_fasta(path)
     sequences = []
     str = ""
     for line in eachline(path)
-        if '>' ∈ line
+        if '>' ∈ line # `if startswith(line, '>')` would be more explicit / correct. What you have would treat a line like "ATT>GC" as a header
             push!(headers, string(lstrip(line, '>')))
             if str != ""
                 push!(sequences, LongDNASeq(str))
@@ -81,16 +82,17 @@ end
 function uniquekmers(seq, k)
     sequence = String(seq)
     1 <= k <= length(sequence) || error("k must be a positive integer less than the length of the sequence")
-    kmers = []
+    # this way you don't store duplicate kmers
+    kmers = Set([]) 
     stopindex = length(sequence)-(k-1)
     for i in 1:stopindex
         kmer = sequence[i:i+k-1]
-        if match(r"[^ACGT]", kmer) != nothing # if kmer contains any ambiguous base
+        if occursin(r"[^ACGT]", kmer) # if kmer contains any ambiguous base
             continue
         end
         push!(kmers, LongDNASeq(kmer))
     end
-    return Set(kmers)
+    return kmers
 end
 
 function distance(set1, set2)
